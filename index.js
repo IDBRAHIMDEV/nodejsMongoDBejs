@@ -3,13 +3,15 @@ const app = express();
 const cors = require('cors');
 const ejs = require('ejs');
 const courses = require('./routes/course');
+const users = require('./routes/user');
+
 
 app.set('view engine', 'ejs');
 app.set('views', './views');
 app.use(express.json())
 app.use(cors());
 app.use('/courses', courses);
-
+app.use('/users', users);
 
 
 //comparaison operators on NodeJS
