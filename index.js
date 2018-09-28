@@ -1,10 +1,12 @@
 const express = require('express')
 const app = express();
+const cors = require('cors');
 const ejs = require('ejs');
 
 app.set('view engine', 'ejs');
 app.set('views', './views');
 app.use(express.json())
+app.use(cors());
 
 const mongoose = require('mongoose');
 
@@ -67,7 +69,11 @@ app.put('/courses/:id', async (req, res) => {
     const myId = req.params.id;
     const course = await Course.updateOne({ _id: myId }, {
         $set: {
-            name: req.body.name
+            name: req.body.name,
+            author: req.body.author,
+            price: req.body.price,
+            category: req.body.category,
+            isPublished: req.body.isPublished
         }
     })
 
@@ -85,7 +91,7 @@ app.get('/courses/:id', async (req, res) => {
 
 app.get('/courses/', (req, res) => {
   getCourses().then((courses) => {
-    res.render('course/index', {courses: courses});
+    res.send(courses);
   });
 
 
